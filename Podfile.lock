@@ -1,0 +1,39 @@
+PODS:
+  - Crashlytics (3.8.3):
+    - Fabric (~> 1.6.3)
+  - Eson (0.3.2)
+  - Fabric (1.6.11)
+  - OneSignal (2.3.4)
+  - TwitterCore (2.7.0):
+    - Fabric
+  - TwitterKit (2.7.0):
+    - TwitterCore (= 2.7.0)
+
+DEPENDENCIES:
+  - Crashlytics
+  - Eson (from `https://github.com/schrockblock/eson`)
+  - Fabric
+  - OneSignal
+  - TwitterCore
+  - TwitterKit
+
+EXTERNAL SOURCES:
+  Eson:
+    :git: https://github.com/schrockblock/eson
+
+CHECKOUT OPTIONS:
+  Eson:
+    :commit: 76ebb2001d6f0e3f5f2e043f19e9500031321a4c
+    :git: https://github.com/schrockblock/eson
+
+SPEC CHECKSUMS:
+  Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
+  Eson: fce37b531203d2e89c38b36cf17408c868313cbc
+  Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
+  OneSignal: c8f0d08ffa30fcf751c97a29639725877027e788
+  TwitterCore: fbdbeaf6d2d20cf7c7aa4136fe5173c1c85df2e2
+  TwitterKit: 97e729ceea041d174126235bf6ff67dcf37772d4
+
+PODFILE CHECKSUM: 55976df822173bbf990b920cc70b62f7f7245ec1
+
+COCOAPODS: 1.1.1
