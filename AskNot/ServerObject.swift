@@ -8,6 +8,6 @@
 
 import UIKit
 
-class ServerObject: Decodable {
+class ServerObject {
     var id: Int?
 }

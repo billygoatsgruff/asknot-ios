@@ -10,7 +10,6 @@ PODS:
     - Alamofire (~> 4.7.2)
   - Crashlytics (3.10.9):
     - Fabric (~> 1.7.13)
-  - Eson (0.4.2)
   - Fabric (1.7.13)
   - FBSDKCoreKit (4.37.0):
     - Bolts (~> 1.7)
@@ -61,7 +60,6 @@ PODS:
 
 DEPENDENCIES:
   - Crashlytics
-  - Eson (from `https://github.com/schrockblock/eson`)
   - Fabric
   - GPUImage
   - Nimble (~> 5.0.0)
@@ -69,19 +67,13 @@ DEPENDENCIES:
   - Quick
   - SBNag.swift
   - ThryvUXComponents (from `https://github.com/ThryvInc/thryv-ux-components`)
-  - TwitterCore
   - TwitterKit
 
 EXTERNAL SOURCES:
-  Eson:
-    :git: https://github.com/schrockblock/eson
   ThryvUXComponents:
     :git: https://github.com/ThryvInc/thryv-ux-components
 
 CHECKOUT OPTIONS:
-  Eson:
-    :commit: e4967beecfc1204401e870aed308d7e241c20bfb
-    :git: https://github.com/schrockblock/eson
   ThryvUXComponents:
     :commit: e847baade8b8928a3d8e304fbcc69ecaf9484352
     :git: https://github.com/ThryvInc/thryv-ux-components
@@ -91,7 +83,6 @@ SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   Cloudinary: d87b545d6a5d00c4022bec964839fdaf359d7c53
   Crashlytics: 55e24fc23989680285a21cb1146578d9d18e432c
-  Eson: e9f877c2b4f39cd71483524dd3443d379b4a1d4f
   Fabric: 25d0963b691fc97be566392243ff0ecef5a68338
   FBSDKCoreKit: fe5f3474499a81963e11e3f3a5c753d0a95ca2b4
   FBSDKLoginKit: 2f7249686d1e30ce8a5ef5400eedf50b3e3df332
@@ -113,6 +104,6 @@ SPEC CHECKSUMS:
   TwitterCore: 8cbc9ad34d91c63a0035ea05bfbfc0d7ca72a28c
   TwitterKit: 054005edf5350aa9074af74b41456e5a61e3f322
 
-PODFILE CHECKSUM: ed2521355a59d37530a7b5b7ea7801bee20076a9
+PODFILE CHECKSUM: 824f4261fc509a4b80dbd53d9d941ceec2a2a7c2
 
 COCOAPODS: 1.4.0

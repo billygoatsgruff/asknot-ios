@@ -7,25 +7,14 @@
 //
 
 import UIKit
-import Eson
+import ThryvUXComponents
+import FunkyNetwork
 
-class ProfileCall: AuthenticatedNetworkCall {
+class ProfileCall: THUXModelCall<UserResponse> {
+    public lazy var userSignal = modelSignal.map { $0.user }.skipNil()
     
-    override init() {
-        super.init()
-        endpoint = "/current_user"
-        httpMethod = "GET"
-    }
-    
-    func fetch(completion: @escaping ((User?, NSError?) -> Void)) {
-        execute({ (json, error) in
-            if error == nil {
-                let user = Eson().fromJsonDictionary(json?["user"] as! [String : AnyObject]?, clazz: User.self)
-                completion(user, nil)
-            }else{
-                completion(nil, error)
-            }
-        })
+    init(configuration: ServerConfigurationProtocol = AskNotServerConfig.current, stubHolder: StubHolderProtocol? = nil) {
+        super.init(configuration: configuration, httpMethod: "GET", httpHeaders: [:], endpoint: "current_user", postData: nil, stubHolder: stubHolder)
     }
 
 }

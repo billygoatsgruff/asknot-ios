@@ -9,24 +9,31 @@
 import UIKit
 import ThryvUXComponents
 import MultiModelTableViewDataSource
+import Prelude
 
 class TweetViewController: THUXRefreshableTableViewController, TweetsListViewModelDelegate {
     @IBOutlet weak var tweetsTableView: UITableView!
     var tweetsViewModel: TweetsListViewModel!
-    var dataSource: MultiModelTableViewDataSource?
+    var dataSource = MultiModelTableViewDataSource()
     
     override func viewDidLoad() {
+        let call = TweetsCall()
+        call.tweetIdsSignal.observeValues { (tweetIds) in
+            self.tweetsViewModel.tweetIds = tweetIds
+            self.tweetsViewModel.fetchTWTRTweets(tweetIdValues: tweetIds.map { String($0.twitterId) })
+        }
+        refreshableModelManager = THUXRefreshableNetworkCallManager(call)
+        
+        setupTableView()
+        
         super.viewDidLoad()
         
         tweetsViewModel = TweetsListViewModel()
         tweetsViewModel.delegate = self
-        tweetsViewModel.fetchTweets()
         
         title = "Tweets"
         
         navigationController?.navigationBar.isTranslucent = false
-        
-        setupTableView()
         
         let profile = UIBarButtonItem(image: UIImage(named: "profile"), style: UIBarButtonItem.Style.plain, target: self, action: #selector(pushProfile))
         navigationItem.rightBarButtonItem = profile
@@ -47,12 +54,11 @@ class TweetViewController: THUXRefreshableTableViewController, TweetsListViewMod
     }
     
     func setupTableView() {
-        tableDataSource = TweetsTableViewDataSource()
-        tableDataSource.retweetDelegate = self.tweetsViewModel
-        
-        let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self.tweetsViewModel, action: #selector(self.tweetsViewModel.fetchTweets), for: .valueChanged)
-        tweetsTableView.refreshControl = refreshControl
+        tableView = tweetsTableView
+        tableView.dataSource = dataSource
+        dataSource.tableView = tableView
+//        tableDataSource = TweetsTableViewDataSource()
+//        tableDataSource.retweetDelegate = self.tweetsViewModel
         
         tweetsTableView.tableFooterView = UIView(frame: CGRect.zero)
         tweetsTableView.estimatedRowHeight = view.bounds.size.height - (navigationController?.navigationBar.bounds.size.height)! - 20
@@ -76,11 +82,15 @@ class TweetViewController: THUXRefreshableTableViewController, TweetsListViewMod
             }
             return
         } else {
-            self.tableDataSource.tweets = self.tweetsViewModel.tweets
-            self.tableDataSource.tweetIds = self.tweetsViewModel.tweetIds
+            var items = [MultiModelTableViewDataSourceItem]()
+            for i in 0..<(tweetsViewModel.tweetIds?.count ?? 0) {
+                items.append(TweetItem("retweetCell", tweetsViewModel.tweetIds?[i], tweetsViewModel.tweets?[i], tweetsViewModel))
+            }
+            items.append(ActionItem(identifier: "actionCell"))
+            let section = MultiModelTableViewDataSourceSection()
+            section.items = items
+            dataSource.sections = [section]
             
-            self.tweetsTableView.delegate = self.tableDataSource
-            self.tweetsTableView.dataSource = self.tableDataSource
             self.tweetsTableView.reloadData()
         }
         self.tweetsTableView.refreshControl?.endRefreshing()

@@ -29,7 +29,6 @@ func notify(error: NSError) {
 }
 
 extension UIAlertController {
-    
     public func show(animated flag: Bool = true, completion: (() -> Void)? = nil) {
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.rootViewController = UIViewController()
@@ -41,5 +40,18 @@ extension UIAlertController {
             
             rootViewController.present(self, animated: flag, completion: completion)
         }
+    }
+}
+
+func show(viewController: UIViewController) {
+    let window = UIWindow(frame: UIScreen.main.bounds)
+    window.rootViewController = UIViewController()
+    window.backgroundColor = UIColor.clear
+    window.windowLevel = UIWindow.Level.alert
+    
+    if let rootViewController = window.rootViewController {
+        window.makeKeyAndVisible()
+        
+        rootViewController.present(viewController, animated: true, completion: nil)
     }
 }

@@ -8,8 +8,11 @@
 
 import UIKit
 import MessageUI
+import ThryvUXComponents
+import MultiModelTableViewDataSource
+import Prelude
 
-class ProfileViewController: UIViewController, MFMailComposeViewControllerDelegate, ProfileViewModelDelegate {
+class ProfileViewController: THUXRefreshableTableViewController, MFMailComposeViewControllerDelegate, ProfileViewModelDelegate {
     @IBOutlet weak var trendsTableView: UITableView!
     @IBOutlet weak var retweetCount: UILabel!
     @IBOutlet weak var sharedLabel: UILabel!
@@ -18,24 +21,38 @@ class ProfileViewController: UIViewController, MFMailComposeViewControllerDelega
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var supportButton: UIButton!
     var viewModel: ProfileViewModel!
-    var dataSource: TrendsDataSource!
+    var dataSource = MultiModelTableViewDataSource()
 
     override func viewDidLoad() {
+        dataSource.tableView = trendsTableView
+        
+        tableView = trendsTableView
+        tableView.dataSource = dataSource
+        
+        let trendsCall = TrendsCall()
+        trendsCall.trendsSignal.observeValues { trends in
+            if trends.count == 0 {
+                self.trendsLabel.isHidden = true
+            }
+            let section = MultiModelTableViewDataSourceSection()
+            section.items = trends.map { TrendItem(identifier: "cell", $0) }
+            self.dataSource.sections = section |> arrayOfSingleObject
+            self.tableView.reloadData()
+        }
+        refreshableModelManager = THUXRefreshableNetworkCallManager(trendsCall)
+        
         super.viewDidLoad()
         
         title = "Profile"
-        
-        dataSource = TrendsDataSource()
         
         trendsTableView.tableFooterView = UIView(frame: CGRect.zero)
 
         viewModel = ProfileViewModel()
         viewModel.delegate = self
         viewModel.fetchProfile()
-        viewModel.fetchTrends()
         
-        let profile = UIBarButtonItem(image: UIImage(named: "feedback"), style: UIBarButtonItem.Style.plain, target: self, action: #selector(giveFeedback))
-        navigationItem.rightBarButtonItem = profile
+        let feedback = UIBarButtonItem(image: UIImage(named: "feedback"), style: UIBarButtonItem.Style.plain, target: self, action: #selector(giveFeedback))
+        navigationItem.rightBarButtonItem = feedback
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -69,8 +86,14 @@ class ProfileViewController: UIViewController, MFMailComposeViewControllerDelega
     }
     
     func didFetchProfile(_ error: NSError?) {
+        if let e = error {
+            if e.domain == "Server" && e.code == 401 {
+                UserDefaults.standard.set(nil, forKey: LoginCall.ApiKeyPref)
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
         if let retweetCount = self.viewModel.user?.retweetsCount {
-            self.retweetCount.text = "\(retweetCount.intValue)"
+            self.retweetCount.text = "\(retweetCount)"
         }
         if let hasShared = self.viewModel.user?.hasShared {
             self.sharedLabel.text = hasShared ? "Yup! YAY!" : "Maybe later"
@@ -80,21 +103,5 @@ class ProfileViewController: UIViewController, MFMailComposeViewControllerDelega
         }
     }
     
-    func didFetchTrends(_ error: NSError?) {
-        if let e = error {
-            if e.domain == "Server" && e.code == 401 {
-                UserDefaults.standard.set(nil, forKey: LoginCall.ApiKeyPref)
-                self.dismiss(animated: true, completion: nil)
-            }
-        }else{
-            if self.viewModel.trends?.count == 0 {
-                self.trendsLabel.isHidden = true
-            }
-            self.dataSource.trends = self.viewModel.trends
-            
-            self.trendsTableView.delegate = self.dataSource
-            self.trendsTableView.dataSource = self.dataSource
-            self.trendsTableView.reloadData()
-        }
-    }
+    func didFetchTrends(_ error: NSError?) {}
 }

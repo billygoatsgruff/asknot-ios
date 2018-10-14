@@ -7,18 +7,13 @@
 //
 
 import UIKit
-import Eson
+import ThryvUXComponents
+import FunkyNetwork
 
-class RetweetCall: AuthenticatedNetworkCall {
+class RetweetCall: THUXAuthenticatedNetworkCall {
     
-    override init() {
-        super.init()
-        endpoint = "/retweets"
-    }
-    
-    func create(tweetId: Int, completion: @escaping ((NSError?) -> Void)) {
-        httpMethod = "POST"
-        
+    init(configuration: ServerConfigurationProtocol = AskNotServerConfig.current, tweetId: Int, stubHolder: StubHolderProtocol? = nil) {
+        var postData: Data?
         var json = Dictionary<String, Int>();
         json["tweet_id"] = tweetId
         do {
@@ -26,27 +21,8 @@ class RetweetCall: AuthenticatedNetworkCall {
         } catch let parseError as NSError {
             NSLog("Parse error: %@", parseError.localizedDescription);
         }
-        
-        execute({ (json, error) in
-            if error == nil {
-                completion(nil)
-            }else{
-                completion(error)
-            }
-        })
-    }
-    
-    func delete(tweetId: Int, completion: @escaping ((NSError?) -> Void)) {
-        httpMethod = "DELETE"
-        endpoint = "/retweets/\(tweetId)"
-        
-        execute({ (json, error) in
-            if error == nil {
-                completion(nil)
-            }else{
-                completion(error)
-            }
-        })
+
+        super.init(configuration: configuration, httpMethod: "POST", httpHeaders: [:], endpoint: "retweets", postData: postData, stubHolder: nil)
     }
 
 }

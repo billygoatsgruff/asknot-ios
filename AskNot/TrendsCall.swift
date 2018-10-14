@@ -7,25 +7,14 @@
 //
 
 import UIKit
-import Eson
+import ThryvUXComponents
+import FunkyNetwork
 
-class TrendsCall: AuthenticatedNetworkCall {
+class TrendsCall: THUXModelCall<TrendsResponse> {
+    public lazy var trendsSignal = modelSignal.map { $0.trends }.skipNil()
     
-    override init() {
-        super.init()
-        endpoint = "/trends"
-        httpMethod = "GET"
-    }
-    
-    func fetch(completion: @escaping ((Array<Trend>?, NSError?) -> Void)) {
-        execute({ (json, error) in
-            if error == nil {
-                let trends = Eson().fromJsonArray(json?["trends"] as! [[String : AnyObject]]?, clazz: Trend.self)
-                completion(trends, nil)
-            }else{
-                completion(nil, error)
-            }
-        })
+    init(configuration: ServerConfigurationProtocol = AskNotServerConfig.current, stubHolder: StubHolderProtocol? = nil) {
+        super.init(configuration: configuration, httpMethod: "GET", httpHeaders: [:], endpoint: "trends", postData: nil, stubHolder: stubHolder)
     }
 
 }

@@ -20,18 +20,20 @@ class ProfileViewModel: NSObject {
     
     func fetchProfile() {
         let profileCall = ProfileCall()
-        profileCall.fetch { (user, error) in
+        profileCall.userSignal.observeValues { user in
             self.user = user
-            self.delegate?.didFetchProfile(error)
+            self.delegate?.didFetchProfile(nil)
         }
+        profileCall.fire()
     }
     
     func fetchTrends() {
         let trendsCall = TrendsCall()
-        trendsCall.fetch { (trends, error) in
+        trendsCall.trendsSignal.observeValues { trends in
             self.trends = trends
-            self.delegate?.didFetchTrends(error)
+            self.delegate?.didFetchTrends(nil)
         }
+        trendsCall.fire()
     }
 
 }

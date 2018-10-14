@@ -20,7 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        Fabric.with([Crashlytics.self, Answers.self, TWTRTwitter.self])
+        Fabric.with([Crashlytics.self, Answers.self])
+        TWTRTwitter.sharedInstance().start(withConsumerKey: "1OOTO1YJlYnFQofCIGknp2vg7", consumerSecret: "CHhqdbVNSN43u2wD3rMy45KAzdF9UjxVR11IVYCG262Zj9TQmj")
         OneSignal.initWithLaunchOptions(launchOptions, appId: "ff5947ed-2d02-4467-89a4-7c153289678a")
         
         UINavigationBar.appearance().barTintColor = UIColor.primary()
@@ -55,6 +56,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        nag.startCountDown()
         
         return true
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        return TWTRTwitter.sharedInstance().application(app, open: url, options: options)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

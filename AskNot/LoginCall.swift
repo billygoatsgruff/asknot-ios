@@ -8,34 +8,41 @@
 
 import UIKit
 import TwitterKit
-import Eson
+import ThryvUXComponents
+import FunkyNetwork
 
-class LoginCall: BaseNetworkCall {
+class LoginCall: THUXCredsLoginNetworkCall {
+    lazy var authResponseSignal = self.dataSignal.skipNil().map(LoginCall.parse).skipNil()
     public static let ApiKeyPref = "api_key"
     
-    override init() {
-        super.init()
-        endpoint = "/sessions"
-        httpMethod = "POST"
+    init(configuration: ServerConfigurationProtocol = AskNotServerConfig.current, stubHolder: StubHolderProtocol? = nil) {
+        super.init(configuration: configuration, wrapKey: nil, stubHolder: stubHolder)
+        usernameKey = "access_token"
+        passwordKey = "access_token_secret"
+        
+        authResponseSignal.observeValues { user in
+            let session = THUXUserDefaultsSession(authDefaultsKey: LoginCall.ApiKeyPref, authHeaderKey: "X-Api-Key")
+            session.setAuthValue(authString: user.apiKey ?? "")
+            THUXSessionManager.session = session
+        }
     }
     
-    func login(session: TWTRSession, completion: @escaping ((User?, NSError?) -> Void)) {
-        var json = Dictionary<String, String>();
-        json["access_token"] = session.authToken
-        json["access_token_secret"] = session.authTokenSecret
-        do {
-            try postData = JSONSerialization.data(withJSONObject: json, options: JSONSerialization.WritingOptions.prettyPrinted)
-        } catch let parseError as NSError {
-            NSLog("Parse error: %@", parseError.localizedDescription);
-        }
+    func login(session: TWTRSession) {
+        username = session.authToken
+        password = session.authTokenSecret
         
-        execute({ (object, error) in
-            if let json = object {
-                let user = Eson().fromJsonDictionary(json as? [String : AnyObject], clazz: User.self)
-                UserDefaults.standard.set(user?.apiKey, forKey: LoginCall.ApiKeyPref)
-                completion(user, nil);
-            }
-        })
+        fire()
+    }
+    
+    static func parse(jsonData: Data) -> User? {
+        do {
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            let userResponse = try decoder.decode(User.self, from: jsonData)
+            return userResponse
+        } catch {
+            return nil
+        }
     }
 
 }

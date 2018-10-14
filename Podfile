@@ -7,8 +7,6 @@ target 'AskNot' do
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'TwitterKit'
-  pod 'TwitterCore'
-  pod 'Eson', :git => 'https://github.com/schrockblock/eson'
   pod 'OneSignal'
   pod 'GPUImage'
   pod 'SBNag.swift'

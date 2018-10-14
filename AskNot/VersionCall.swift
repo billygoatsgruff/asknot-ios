@@ -10,9 +10,9 @@ import UIKit
 import FunkyNetwork
 
 class VersionCall: JsonNetworkCall {
-    public let versionSignal = jsonSignal.map(VersionCall.parse)
+    public lazy var versionSignal = jsonSignal.map(VersionCall.parse)
     
-    init(configuration: ServerConfigurationProtocol = AskNotServerConfig.current, endpoint: String, stubHolder: StubHolderProtocol?) {
+    init(configuration: ServerConfigurationProtocol = AskNotServerConfig.current, stubHolder: StubHolderProtocol? = nil) {
         super.init(configuration: configuration, httpMethod: "GET", endpoint: "version", postData: nil, stubHolder: stubHolder)
     }
     

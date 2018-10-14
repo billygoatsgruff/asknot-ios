@@ -9,12 +9,20 @@
 import UIKit
 
 extension UIColor {
-    open static func primary() -> UIColor {
+    public static func primary() -> UIColor {
         return uicolorFromHex(rgbValue: 0x25677b)
     }
     
-    open static func accent() -> UIColor {
+    public static func primaryDark() -> UIColor {
+        return uicolorFromHex(rgbValue: 0x15576b)
+    }
+    
+    public static func accent() -> UIColor {
         return uicolorFromHex(rgbValue: 0xED2359)
+    }
+    
+    public static func reverse() -> UIColor {
+        return UIColor.white
     }
     
     static func uicolorFromHex(rgbValue: UInt32) -> UIColor{

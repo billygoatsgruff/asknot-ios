@@ -7,24 +7,13 @@
 //
 
 import UIKit
-import Eson
 import ThryvUXComponents
 import FunkyNetwork
 
 class TweetsCall: THUXModelCall<TweetIdsResponse> {
+    public lazy var tweetIdsSignal = modelSignal.map { $0.tweets }.skipNil()
     
-    init(stubHolder: StubHolderProtocol?) {
+    init(stubHolder: StubHolderProtocol? = nil) {
         super.init(configuration: AskNotServerConfig.current, httpMethod: "GET", httpHeaders: [:], endpoint: "tweets", postData: nil, stubHolder: stubHolder)
-    }
-    
-    func fetch(completion: @escaping ((Array<TweetId>?, NSError?) -> Void)) {
-        execute({ (json, error) in
-            if error == nil {
-                let tweetIdHolders = Eson().fromJsonArray(json?["tweets"] as! [[String : AnyObject]]?, clazz: TweetId.self)
-                completion(tweetIdHolders, nil)
-            }else{
-                completion(nil, error)
-            }
-        })
     }
 }

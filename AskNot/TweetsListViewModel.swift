@@ -8,7 +8,9 @@
 
 import UIKit
 import TwitterKit
-import Eson
+import Prelude
+import Result
+import ReactiveSwift
 
 protocol TweetsListViewModelDelegate {
     func finishedLoadingTweets(_ error: NSError?)
@@ -21,26 +23,23 @@ open class TweetsListViewModel: NSObject, RetweetCellDelegate {
     var tweetIds: [TweetId]?
     
     @objc open func fetchTweets() {
-        let tweetsCall = TweetsCall()
-        tweetsCall.fetch { (tweetIdHolders, error) in
-            if let e = error {
-                self.delegate?.finishedLoadingTweets(e)
-                return
-            }
-            self.tweetIds = tweetIdHolders
-            if let tweetIds = tweetIdHolders {
-                var tweetIdValues = Array<String>()
-                for tweetId in tweetIds {
-                    tweetIdValues.append(String(tweetId.twitterId))
-                }
-                self.fetchTWTRTweets(tweetIdValues: tweetIdValues)
-            } else {
-                self.delegate?.finishedLoadingTweets(nil)
-            }
-        }
+//        let tweetsCall = TweetsCall()
+//        tweetsCall.fetch { (tweetIdHolders, error) in
+//            if let e = error {
+//                self.delegate?.finishedLoadingTweets(e)
+//                return
+//            }
+//            self.tweetIds = tweetIdHolders
+//            if let tweetIds = tweetIdHolders {
+//                var tweetIdValues = tweetIds.map { $0.twitterId }
+//                self.fetchTWTRTweets(tweetIdValues: tweetIdValues)
+//            } else {
+//                self.delegate?.finishedLoadingTweets(nil)
+//            }
+//        }
     }
     
-    func fetchTWTRTweets(tweetIdValues: Array<String>) {
+    open func fetchTWTRTweets(tweetIdValues: Array<String>) {
         if let userID = TWTRTwitter.sharedInstance().sessionStore.session()?.userID {
             let client = TWTRAPIClient(userID: userID)
             var clientError : NSError?

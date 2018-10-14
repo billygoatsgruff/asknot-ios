@@ -8,10 +8,10 @@
 
 import UIKit
 
-class User: ServerObject {
+class User: ServerObject, Decodable {
     var apiKey: String?
     var username: String?
     var hasShared: Bool?
     var isSupporter: Bool?
-    var retweetsCount: NSNumber?
+    var retweetsCount: Int?
 }

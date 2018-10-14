@@ -8,7 +8,6 @@
 
 import UIKit
 
-class Trend: ServerObject {
+class Trend: ServerObject, Decodable {
     var text: String?
-
 }

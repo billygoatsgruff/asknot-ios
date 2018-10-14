@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="361" id="KGk-i7-Jjw" customClass="RetweetTableViewCell" customModule="AskNot" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="361"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="360.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m0P-r0-O9i">
+                        <rect key="frame" x="259" y="305" width="45" height="45"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="45" id="I1v-RO-T63"/>
+                            <constraint firstAttribute="height" constant="45" id="qDh-Le-6Xo"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="15"/>
+                        <state key="normal" title="?">
+                            <color key="titleColor" red="0.1450980392" green="0.4039215686" blue="0.4823529412" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </state>
+                    </button>
+                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="scr-aS-iNp" customClass="TWTRTweetView">
+                        <rect key="frame" x="16" y="11" width="288" height="192"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5mZ-8G-jRm">
+                        <rect key="frame" x="130" y="290" width="60" height="60"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="88T-AF-Rf2"/>
+                            <constraint firstAttribute="height" constant="60" id="Xda-2k-GFi"/>
+                        </constraints>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <state key="normal">
+                            <color key="titleColor" red="0.1450980392" green="0.4039215686" blue="0.4823529412" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </state>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="scr-aS-iNp" secondAttribute="trailing" constant="16" id="3Kr-6u-SOe"/>
+                    <constraint firstItem="scr-aS-iNp" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="JAe-TM-1AR"/>
+                    <constraint firstAttribute="trailing" secondItem="m0P-r0-O9i" secondAttribute="trailing" constant="16" id="hLm-zD-rdK"/>
+                    <constraint firstAttribute="bottom" secondItem="5mZ-8G-jRm" secondAttribute="bottom" constant="10.5" id="hYw-wh-Gdr"/>
+                    <constraint firstAttribute="bottom" secondItem="m0P-r0-O9i" secondAttribute="bottom" constant="10.5" id="irr-0b-eer"/>
+                    <constraint firstItem="5mZ-8G-jRm" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="rQb-zw-3xl"/>
+                    <constraint firstItem="scr-aS-iNp" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="vQP-aF-qOV"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="retweetButton" destination="5mZ-8G-jRm" id="Yda-gJ-LuA"/>
+                <outlet property="tweetView" destination="scr-aS-iNp" id="Sbd-m3-az2"/>
+                <outlet property="whyButton" destination="m0P-r0-O9i" id="VkE-Az-mCY"/>
+            </connections>
+            <point key="canvasLocation" x="-334.39999999999998" y="53.523238380809602"/>
+        </tableViewCell>
+    </objects>
+</document>

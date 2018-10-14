@@ -15,7 +15,7 @@ class TweetItem: ConcreteMultiModelTableViewDataSourceItem<RetweetTableViewCell>
     var tweetId: TweetId!
     var tweet: TWTRTweet?
     
-    init(_ identifier: String, _ tweetId: TweetId?, _ tweet: TWTRTweet?, _ retweetDelegate: RetweetCellDelegate?) {
+    init(_ identifier: String = "retweetCell", _ tweetId: TweetId?, _ tweet: TWTRTweet?, _ retweetDelegate: RetweetCellDelegate?) {
         self.tweetId = tweetId
         self.tweet = tweet
         self.retweetDelegate = retweetDelegate

@@ -2,8 +2,8 @@
 //  RetweetTableViewCell.swift
 //  AskNot
 //
-//  Created by Elliot Schrock on 2/8/17.
-//  Copyright © 2017 billygoatsgruff. All rights reserved.
+//  Created by Elliot Schrock on 10/14/18.
+//  Copyright © 2018 billygoatsgruff. All rights reserved.
 //
 
 import UIKit
@@ -64,19 +64,14 @@ class RetweetTableViewCell: UITableViewCell {
         }))
         alert.show()
     }
-
+    
     @IBAction func retweetPressed() {
         if let displayedTweet = tweet {
-            if let displayedTweet = self.tweet, let objectId = self.tweetId.objectId?.intValue {
-                let retweetCall = RetweetCall()
+            if let displayedTweet = self.tweet, let objectId = self.tweetId.id {
                 if !displayedTweet.isRetweeted {
-                    retweetCall.create(tweetId: objectId, completion: { (error) in
-                        
-                    })
+                    RetweetCall(tweetId: objectId).fire()
                 }else{
-                    retweetCall.delete(tweetId: objectId, completion: { (error) in
-                        
-                    })
+                    UnRetweetCall(tweetId: objectId).fire()
                 }
             }
             

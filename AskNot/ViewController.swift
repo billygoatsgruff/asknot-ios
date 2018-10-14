@@ -8,7 +8,7 @@
 
 import UIKit
 import TwitterKit
-import Eson
+import ThryvUXComponents
 
 class ViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -18,9 +18,27 @@ class ViewController: UIViewController {
         
         activityIndicator.isHidden = false
         
+//        let store = TWTRTwitter.sharedInstance().sessionStore
+//        store.reload()
+//        for case let session as TWTRSession in store.existingUserSessions() {
+//            store.logOutUserID(session.userID)
+//        }
+        
         let logInButton = TWTRLogInButton { (session, twitterError) in
+            if let err = twitterError {
+                print("Twitter Login Error: \(String.init(describing: err.localizedDescription))")
+                return
+            }
             if let unwrappedSession = session {
-                self.login(session: unwrappedSession)
+//                let store = TWTRTwitter.sharedInstance().sessionStore
+//                store.reload()
+//                store.logOutUserID(unwrappedSession.userID)
+//
+//                TWTRTwitter.sharedInstance().logIn(completion: { (session2, error) in
+//                    if let unwrappedSession = session2 {
+                        self.login(session: unwrappedSession)
+//                    }
+//                })
             }
         }
         
@@ -36,6 +54,7 @@ class ViewController: UIViewController {
         VersionChecker.isVersion(VersionChecker.appVersionString()) { (isCurrent) in
             if isCurrent {
                 if UserDefaults.standard.string(forKey: LoginCall.ApiKeyPref) != nil {
+                    THUXSessionManager.session = THUXUserDefaultsSession(authDefaultsKey: LoginCall.ApiKeyPref, authHeaderKey: "X-Api-Key")
                     self.performSegue(withIdentifier: "tweetlist", sender: self)
                 }
             }else{
@@ -52,11 +71,12 @@ class ViewController: UIViewController {
     
     func login(session: TWTRSession) {
         let loginCall = LoginCall()
-        loginCall.login(session: session) { (user, error) in
-            if error == nil {
+        loginCall.httpResponseSignal.observeValues { response in
+            if response.statusCode < 300 {
                 self.performSegue(withIdentifier: "tweetlist", sender: self)
             }
         }
+        loginCall.login(session: session)
     }
 
 }
