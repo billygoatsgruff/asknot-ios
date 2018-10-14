@@ -7,7 +7,18 @@
 //
 
 import UIKit
+import MultiModelTableViewDataSource
 
-class TrendItem: NSObject {
+class TrendItem: ConcreteMultiModelTableViewDataSourceItem<UITableViewCell> {
+    var trend: Trend?
+    
+    init(identifier: String, _ trend: Trend?) {
+        self.trend = trend
+        super.init(identifier: identifier)
+    }
+    
+    override func configureCell(_ cell: UITableViewCell) {
+        cell.textLabel?.text = trend?.text
+    }
 
 }

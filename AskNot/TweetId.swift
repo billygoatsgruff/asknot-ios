@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TweetId: ServerObject {
+class TweetId: ServerObject, Decodable {
     var twitterId: Int64 = 0
     var why: String?
 }

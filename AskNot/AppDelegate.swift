@@ -11,18 +11,49 @@ import Fabric
 import TwitterKit
 import Crashlytics
 import OneSignal
+import SBNag_swift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
     var window: UIWindow?
+    let nag = SBNagService()
 
-
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        Fabric.with([Crashlytics.self, Answers.self, Twitter.self])
+        Fabric.with([Crashlytics.self, Answers.self, TWTRTwitter.self])
         OneSignal.initWithLaunchOptions(launchOptions, appId: "ff5947ed-2d02-4467-89a4-7c153289678a")
+        
+        UINavigationBar.appearance().barTintColor = UIColor.primary()
+        UINavigationBar.appearance().tintColor = UIColor.white
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white];
 
+        let rateNagtion = SBNagtion()
+        rateNagtion.defaultsKey = "rate"
+        rateNagtion.title = "Thanks for your support!"
+        rateNagtion.message = "Wanna be EXTRA awesome and rate this app? (This helps us get more downloads, and hence, more amplifying power)"
+        rateNagtion.yesAction = { () in
+            //TODO
+        }
+        
+        let shareNagtion = SBNagtion()
+        shareNagtion.defaultsKey = "share"
+        shareNagtion.title = "Spread the word!"
+        shareNagtion.message = "The more people who use the app, the more we can spread liberal values. \nCan you help?"
+        shareNagtion.yesAction = { () in
+            //TODO
+        }
+        
+        let subscribeNagtion = SBNagtion()
+        subscribeNagtion.defaultsKey = "share"
+        subscribeNagtion.title = "Remember, remember, the 8th of November"
+        subscribeNagtion.message = "We desperately need your help to stay up and running. \nCan you subscribe for $11.08 a month?"
+        subscribeNagtion.yesAction = { () in
+            //TODO
+        }
+        
+        nag.nagtions.append(contentsOf: [rateNagtion, shareNagtion, subscribeNagtion])
+//        nag.startCountDown()
+        
         return true
     }
 

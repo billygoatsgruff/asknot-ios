@@ -8,6 +8,7 @@
 
 import UIKit
 
-class Trend: NSObject {
+class Trend: ServerObject {
+    var text: String?
 
 }

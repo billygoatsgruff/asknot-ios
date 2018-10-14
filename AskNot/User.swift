@@ -11,4 +11,7 @@ import UIKit
 class User: ServerObject {
     var apiKey: String?
     var username: String?
+    var hasShared: Bool?
+    var isSupporter: Bool?
+    var retweetsCount: NSNumber?
 }

@@ -9,7 +9,13 @@
 import UIKit
 
 class ActionTableViewCell: UITableViewCell {
-
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var subtitleLabel: UILabel!
+    @IBOutlet weak var promptLabel: UILabel!
+    @IBOutlet weak var actionLabel: UILabel!
+    @IBOutlet weak var actionButton: UIButton!
+    @IBOutlet var labels: [UILabel]!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

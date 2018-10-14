@@ -8,13 +8,13 @@
 
 import UIKit
 import Eson
+import ThryvUXComponents
+import FunkyNetwork
 
-class TweetsCall: AuthenticatedNetworkCall {
+class TweetsCall: THUXModelCall<TweetIdsResponse> {
     
-    override init() {
-        super.init()
-        endpoint = "/tweets"
-        httpMethod = "GET"
+    init(stubHolder: StubHolderProtocol?) {
+        super.init(configuration: AskNotServerConfig.current, httpMethod: "GET", httpHeaders: [:], endpoint: "tweets", postData: nil, stubHolder: stubHolder)
     }
     
     func fetch(completion: @escaping ((Array<TweetId>?, NSError?) -> Void)) {

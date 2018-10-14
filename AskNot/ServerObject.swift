@@ -7,12 +7,7 @@
 //
 
 import UIKit
-import Eson
 
-class ServerObject: NSObject, EsonKeyMapper {
-    var objectId: Int!
-    
-    open static func esonPropertyNameToKeyMap() -> [String : String] {
-        return ["objectId":"id"]
-    }
+class ServerObject: Decodable {
+    var id: Int?
 }

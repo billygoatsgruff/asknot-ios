@@ -7,72 +7,93 @@
 //
 
 import UIKit
-import Eson
-import TwitterKit
+import ThryvUXComponents
+import MultiModelTableViewDataSource
 
-class TweetViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class TweetViewController: THUXRefreshableTableViewController, TweetsListViewModelDelegate {
     @IBOutlet weak var tweetsTableView: UITableView!
-    var tweets: [TWTRTweet]?
-    var tweetIds: [TweetId]?
+    var tweetsViewModel: TweetsListViewModel!
+    var dataSource: MultiModelTableViewDataSource?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tweetsViewModel = TweetsListViewModel()
+        tweetsViewModel.delegate = self
+        tweetsViewModel.fetchTweets()
+        
         title = "Tweets"
         
-        tweetsTableView.tableFooterView = UIView(frame: CGRect.zero)
-        tweetsTableView.estimatedRowHeight = 100
-        tweetsTableView.rowHeight = UITableViewAutomaticDimension
-
-        fetchTweetIds()
+        navigationController?.navigationBar.isTranslucent = false
+        
+        setupTableView()
+        
+        let profile = UIBarButtonItem(image: UIImage(named: "profile"), style: UIBarButtonItem.Style.plain, target: self, action: #selector(pushProfile))
+        navigationItem.rightBarButtonItem = profile
     }
     
-    func fetchTweetIds() {
-        let tweetsCall = TweetsCall()
-        tweetsCall.fetch { (tweetIdHolders, error) in
-            if let e = error {
-                if e.domain == "Server" && e.code == 401 {
-                    UserDefaults.standard.set(nil, forKey: LoginCall.ApiKeyPref)
-                    self.dismiss(animated: true, completion: nil)
-                }
-                return
-            }
-            self.tweetIds = tweetIdHolders
-            if let tweetIds = tweetIdHolders {
-                var tweetIdValues = Array<String>()
-                for tweetId in tweetIds {
-                    tweetIdValues.append(String(tweetId.twitterId))
-                }
-                self.fetchTweets(tweetIdValues: tweetIdValues)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        VersionChecker.isVersion(VersionChecker.appVersionString()) { (isCurrent) in
+            if !isCurrent {
+                let alertController = UIAlertController(title: "New version!", message: "New features and improvements are waiting!", preferredStyle: UIAlertController.Style.alert)
+                alertController.addAction(UIAlertAction(title: "Yay!", style: UIAlertAction.Style.default, handler: { (action) in
+                    UIApplication.shared.open(URL(string: "https://itunes.apple.com/us/app/asknot/id1205213169?ls=1&mt=8")!, options: [:], completionHandler: nil)
+                }))
+                alertController.show()
             }
         }
     }
     
-    func fetchTweets(tweetIdValues: Array<String>) {
-        let client = TWTRAPIClient.withCurrentUser()
-        client.loadTweets(withIDs: tweetIdValues) { (tweets, error) in
-            self.tweets = tweets
-            self.tweetsTableView.delegate = self
-            self.tweetsTableView.dataSource = self
+    func setupTableView() {
+        tableDataSource = TweetsTableViewDataSource()
+        tableDataSource.retweetDelegate = self.tweetsViewModel
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self.tweetsViewModel, action: #selector(self.tweetsViewModel.fetchTweets), for: .valueChanged)
+        tweetsTableView.refreshControl = refreshControl
+        
+        tweetsTableView.tableFooterView = UIView(frame: CGRect.zero)
+        tweetsTableView.estimatedRowHeight = view.bounds.size.height - (navigationController?.navigationBar.bounds.size.height)! - 20
+        tweetsTableView.rowHeight = view.bounds.size.height - (navigationController?.navigationBar.bounds.size.height)! - 20
+    }
+    
+    @objc func pushProfile() {
+        performSegue(withIdentifier: "profile", sender: self)
+    }
+    
+    func displayShareSheet(shareContent: String) {
+        let activityViewController = UIActivityViewController(activityItems: [shareContent as NSString], applicationActivities: nil)
+        present(activityViewController, animated: true, completion: {})
+    }
+    
+    func finishedLoadingTweets(_ error: NSError?){
+        if let e = error {
+            if e.domain == "Server" && e.code == 401 {
+                UserDefaults.standard.set(nil, forKey: LoginCall.ApiKeyPref)
+                self.dismiss(animated: true, completion: nil)
+            }
+            return
+        } else {
+            self.tableDataSource.tweets = self.tweetsViewModel.tweets
+            self.tableDataSource.tweetIds = self.tweetsViewModel.tweetIds
+            
+            self.tweetsTableView.delegate = self.tableDataSource
+            self.tweetsTableView.dataSource = self.tableDataSource
+            self.tweetsTableView.reloadData()
+        }
+        self.tweetsTableView.refreshControl?.endRefreshing()
+    }
+    
+    func scrollToNextPage() {
+        if tweetsTableView.contentOffset.y < ((CGFloat(self.tweetsViewModel.tweets?.count ?? 0)) - 1 as CGFloat) * self.tweetsTableView.frame.height {
+            UIView.animate(withDuration: 0.3) {
+                self.tweetsTableView.contentOffset.y += self.tweetsTableView.frame.height
+            }
+        } else {
             self.tweetsTableView.reloadData()
         }
     }
-    
-    //MARK: -
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (tweets != nil) ? tweets!.count : 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: RetweetTableViewCell = tableView.dequeueReusableCell(withIdentifier: "retweetCell", for: indexPath) as! RetweetTableViewCell
-        
-        cell.tweetId = tweetIds?[indexPath.row]
-        cell.tweet = tweets?[indexPath.row]
-        
-        return cell
-    }
-    
-    
 
 }

@@ -7,7 +7,65 @@
 //
 
 import UIKit
+import TwitterKit
+import Eson
 
-class TweetsListViewModel: NSObject {
+protocol TweetsListViewModelDelegate {
+    func finishedLoadingTweets(_ error: NSError?)
+    func scrollToNextPage()
+}
+
+open class TweetsListViewModel: NSObject, RetweetCellDelegate {
+    var delegate: TweetsListViewModelDelegate?
+    var tweets: [TWTRTweet]?
+    var tweetIds: [TweetId]?
+    
+    @objc open func fetchTweets() {
+        let tweetsCall = TweetsCall()
+        tweetsCall.fetch { (tweetIdHolders, error) in
+            if let e = error {
+                self.delegate?.finishedLoadingTweets(e)
+                return
+            }
+            self.tweetIds = tweetIdHolders
+            if let tweetIds = tweetIdHolders {
+                var tweetIdValues = Array<String>()
+                for tweetId in tweetIds {
+                    tweetIdValues.append(String(tweetId.twitterId))
+                }
+                self.fetchTWTRTweets(tweetIdValues: tweetIdValues)
+            } else {
+                self.delegate?.finishedLoadingTweets(nil)
+            }
+        }
+    }
+    
+    func fetchTWTRTweets(tweetIdValues: Array<String>) {
+        if let userID = TWTRTwitter.sharedInstance().sessionStore.session()?.userID {
+            let client = TWTRAPIClient(userID: userID)
+            var clientError : NSError?
+            let request = client.urlRequest(withMethod: "GET", urlString: "https://api.twitter.com/1.1/statuses/lookup.json?id=\(tweetIdValues.joined(separator: ","))", parameters: nil, error: &clientError)
+            client.sendTwitterRequest(request, completion: { (response, data, error) in
+                if let jsonData = data {
+                    do {
+                        let json = try JSONSerialization.jsonObject(with: jsonData, options: JSONSerialization.ReadingOptions.allowFragments)
+                        var tweets: [TWTRTweet] = [TWTRTweet]()
+                        for tweetJson in json as! [[String : AnyObject]] {
+                            tweets.append(TWTRTweet(jsonDictionary: tweetJson)!)
+                        }
+                        self.tweets = tweets
+                    }catch let error as NSError {
+                        print(error)
+                    }
+                    self.delegate?.finishedLoadingTweets(nil)
+                }
+            })
+        }
+    }
+    
+    func updatedTweet(tweet: TWTRTweet, with newTweet: TWTRTweet) {
+        fetchTweets()
+        delegate?.scrollToNextPage()
+    }
 
 }

@@ -38,7 +38,7 @@ class RetweetCall: AuthenticatedNetworkCall {
     
     func delete(tweetId: Int, completion: @escaping ((NSError?) -> Void)) {
         httpMethod = "DELETE"
-        endpoint = "retweets/\(tweetId)"
+        endpoint = "/retweets/\(tweetId)"
         
         execute({ (json, error) in
             if error == nil {

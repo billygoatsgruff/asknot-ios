@@ -8,6 +8,6 @@
 
 import UIKit
 
-class Environment: NSObject {
+class Environment {
 
 }

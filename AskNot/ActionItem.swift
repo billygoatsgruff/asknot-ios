@@ -7,7 +7,13 @@
 //
 
 import UIKit
+import MultiModelTableViewDataSource
 
-class ActionItem: NSObject {
-
+class ActionItem: ConcreteMultiModelTableViewDataSourceItem<ActionTableViewCell> {
+    
+    override func configureCell(_ cell: UITableViewCell) {
+        if let cell = cell as? ActionTableViewCell {
+            
+        }
+    }
 }

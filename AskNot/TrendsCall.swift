@@ -7,7 +7,25 @@
 //
 
 import UIKit
+import Eson
 
 class TrendsCall: AuthenticatedNetworkCall {
+    
+    override init() {
+        super.init()
+        endpoint = "/trends"
+        httpMethod = "GET"
+    }
+    
+    func fetch(completion: @escaping ((Array<Trend>?, NSError?) -> Void)) {
+        execute({ (json, error) in
+            if error == nil {
+                let trends = Eson().fromJsonArray(json?["trends"] as! [[String : AnyObject]]?, clazz: Trend.self)
+                completion(trends, nil)
+            }else{
+                completion(nil, error)
+            }
+        })
+    }
 
 }
