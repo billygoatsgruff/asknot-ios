@@ -1,109 +1,158 @@
 PODS:
-  - Alamofire (4.7.3)
-  - Bolts (1.9.0):
-    - Bolts/AppLinks (= 1.9.0)
-    - Bolts/Tasks (= 1.9.0)
-  - Bolts/AppLinks (1.9.0):
-    - Bolts/Tasks
-  - Bolts/Tasks (1.9.0)
-  - Cloudinary (2.4.0):
-    - Alamofire (~> 4.7.2)
-  - Crashlytics (3.10.9):
-    - Fabric (~> 1.7.13)
-  - Fabric (1.7.13)
-  - FBSDKCoreKit (4.37.0):
-    - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.37.0):
-    - FBSDKCoreKit
-  - FunkyNetwork (0.1.5):
-    - OHHTTPStubs/Swift
-    - Prelude (~> 3.0)
-    - ReactiveSwift
+  - Crashlytics (3.14.0):
+    - Fabric (~> 1.10.2)
+  - Fabric (1.10.2)
+  - FlexDataSource (0.1.6):
+    - fuikit
+  - fuikit (0.0.7)
+  - FunNet/Combine (0.0.1):
+    - FunNet/Core
+    - LithoOperators
+  - FunNet/Core (0.0.1):
+    - LithoOperators
   - GPUImage (0.1.7)
-  - ISO8601DateFormatter (0.8)
-  - MultiModelTableViewDataSource (0.0.3)
-  - Nimble (5.0.0)
-  - OHHTTPStubs/Core (6.1.0)
-  - OHHTTPStubs/Default (6.1.0):
-    - OHHTTPStubs/Core
-    - OHHTTPStubs/JSON
-    - OHHTTPStubs/NSURLSession
-    - OHHTTPStubs/OHPathHelpers
-  - OHHTTPStubs/JSON (6.1.0):
-    - OHHTTPStubs/Core
-  - OHHTTPStubs/NSURLSession (6.1.0):
-    - OHHTTPStubs/Core
-  - OHHTTPStubs/OHPathHelpers (6.1.0)
-  - OHHTTPStubs/Swift (6.1.0):
-    - OHHTTPStubs/Default
-  - OneSignal (2.9.0)
+  - LithoOperators (0.0.15):
+    - Prelude
+  - LUX (0.2.5):
+    - LUX/AppOpenFlow (= 0.2.5)
+    - LUX/Auth (= 0.2.5)
+    - LUX/Base (= 0.2.5)
+    - LUX/BaseAppOpenFlow (= 0.2.5)
+    - LUX/BaseCollectionViews (= 0.2.5)
+    - LUX/BaseFunctional (= 0.2.5)
+    - LUX/BaseNetworking (= 0.2.5)
+    - LUX/BaseTableViews (= 0.2.5)
+    - LUX/CollectionViews (= 0.2.5)
+    - LUX/Networking (= 0.2.5)
+    - LUX/Search (= 0.2.5)
+    - LUX/TableViews (= 0.2.5)
+    - LUX/Utilities (= 0.2.5)
+  - LUX/AppOpenFlow (0.2.5):
+    - LUX/Auth
+    - LUX/Networking
+  - LUX/Auth (0.2.5)
+  - LUX/Base (0.2.5):
+    - FlexDataSource
+    - fuikit
+    - FunNet/Core
+    - LithoOperators
+    - Prelude (~> 3.0)
+    - SDWebImage
+    - Slippers
+  - LUX/BaseAppOpenFlow (0.2.5):
+    - LUX/BaseFunctional
+  - LUX/BaseCollectionViews (0.2.5):
+    - FlexDataSource
+    - LUX/BaseFunctional
+  - LUX/BaseFunctional (0.2.5)
+  - LUX/BaseNetworking (0.2.5):
+    - FunNet/Core
+    - LUX/Auth
+    - Slippers
+  - LUX/BaseTableViews (0.2.5):
+    - FlexDataSource
+    - LUX/BaseFunctional
+  - LUX/CollectionViews (0.2.5):
+    - LUX/BaseCollectionViews
+  - LUX/Networking (0.2.5):
+    - FunNet/Combine
+    - LUX/BaseNetworking
+  - LUX/Search (0.2.5):
+    - LUX/TableViews
+  - LUX/TableViews (0.2.5):
+    - LUX/BaseTableViews
+  - LUX/Utilities (0.2.5):
+    - Prelude (~> 3.0)
+  - OneSignal (2.15.4)
+  - PlaygroundVCHelpers (0.0.2)
   - Prelude (3.0.0)
-  - Quick (1.3.2)
-  - ReactiveSwift (4.0.0):
-    - Result (~> 4.0)
-  - Result (4.0.0)
   - SBNag.swift (0.0.2):
     - SwiftDate
-  - SSPullToRefresh (1.3.0)
-  - SwiftDate (5.0.10)
-  - ThryvUXComponents (0.0.1):
-    - Cloudinary
-    - FBSDKLoginKit
-    - FunkyNetwork
-    - ISO8601DateFormatter
-    - MultiModelTableViewDataSource
-    - Prelude (~> 3.0)
-    - SSPullToRefresh
+  - SDWebImage (5.9.4):
+    - SDWebImage/Core (= 5.9.4)
+  - SDWebImage/Core (5.9.4)
+  - Slippers (0.0.2)
+  - SwiftDate (6.2.0)
   - TwitterCore (3.2.0)
-  - TwitterKit (3.4.1):
-    - TwitterCore (>= 3.1.0)
+  - TwitterKit (3.4.2):
+    - TwitterCore (>= 3.2.0)
 
 DEPENDENCIES:
   - Crashlytics
   - Fabric
+  - FlexDataSource (from `https://github.com/ThryvInc/flex-data-source`)
+  - FunNet/Combine (from `https://github.com/schrockblock/funnet`)
   - GPUImage
-  - Nimble (~> 5.0.0)
+  - LithoOperators (from `https://github.com/ThryvInc/LithoOperators`)
+  - LUX (from `https://github.com/ThryvInc/LUX`)
   - OneSignal
-  - Quick
+  - PlaygroundVCHelpers (from `https://github.com/ThryvInc/playground-vc-helpers`)
   - SBNag.swift
-  - ThryvUXComponents (from `https://github.com/ThryvInc/thryv-ux-components`)
   - TwitterKit
 
+SPEC REPOS:
+  trunk:
+    - Crashlytics
+    - Fabric
+    - fuikit
+    - GPUImage
+    - OneSignal
+    - Prelude
+    - SBNag.swift
+    - SDWebImage
+    - Slippers
+    - SwiftDate
+    - TwitterCore
+    - TwitterKit
+
 EXTERNAL SOURCES:
-  ThryvUXComponents:
-    :git: https://github.com/ThryvInc/thryv-ux-components
+  FlexDataSource:
+    :git: https://github.com/ThryvInc/flex-data-source
+  FunNet:
+    :git: https://github.com/schrockblock/funnet
+  LithoOperators:
+    :git: https://github.com/ThryvInc/LithoOperators
+  LUX:
+    :git: https://github.com/ThryvInc/LUX
+  PlaygroundVCHelpers:
+    :git: https://github.com/ThryvInc/playground-vc-helpers
 
 CHECKOUT OPTIONS:
-  ThryvUXComponents:
-    :commit: e847baade8b8928a3d8e304fbcc69ecaf9484352
-    :git: https://github.com/ThryvInc/thryv-ux-components
+  FlexDataSource:
+    :commit: ff640567fcbcf7f2db09b5264614dc4bc5811a5f
+    :git: https://github.com/ThryvInc/flex-data-source
+  FunNet:
+    :commit: e56bc9bdb94db1df53f6a84c4041b2dc72bbd6cb
+    :git: https://github.com/schrockblock/funnet
+  LithoOperators:
+    :commit: b2ad9e7bf37efebe935c661f6dbb7c1b0a16acd6
+    :git: https://github.com/ThryvInc/LithoOperators
+  LUX:
+    :commit: 765f72b72e8f1761fa50c17bcaa2032e0e8c1fde
+    :git: https://github.com/ThryvInc/LUX
+  PlaygroundVCHelpers:
+    :commit: 1b1f5ed572a1965e1d52bbc1b21f3796a6f144e2
+    :git: https://github.com/ThryvInc/playground-vc-helpers
 
 SPEC CHECKSUMS:
-  Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
-  Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
-  Cloudinary: d87b545d6a5d00c4022bec964839fdaf359d7c53
-  Crashlytics: 55e24fc23989680285a21cb1146578d9d18e432c
-  Fabric: 25d0963b691fc97be566392243ff0ecef5a68338
-  FBSDKCoreKit: fe5f3474499a81963e11e3f3a5c753d0a95ca2b4
-  FBSDKLoginKit: 2f7249686d1e30ce8a5ef5400eedf50b3e3df332
-  FunkyNetwork: 64a440e313433d1d5e1fd0b248d0ca3b022decf3
+  Crashlytics: 9220f5bc89e7a618df411b4f639389dbfb0e03d2
+  Fabric: ea977e3cd9c20425516d3dafd3bf8c941c51223f
+  FlexDataSource: 411e77d3a933d71ae3094e3d4d6ccedd3419f29e
+  fuikit: 9e4c918280be6b292e4564564dd11495e5f91861
+  FunNet: d3a58cf3092d9ec4c9ca9338c4f20fcc7e0eebad
   GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
-  ISO8601DateFormatter: 4551b6ce4f83185425f583b0b3feb3c7b59b942c
-  MultiModelTableViewDataSource: cab335fcc0ea4ee6513429908d65677545c5e407
-  Nimble: 56fc9f5020effa2206de22c3dd910f4fb011b92f
-  OHHTTPStubs: 1e21c7d2c084b8153fc53d48400d8919d2d432d0
-  OneSignal: fc816c9dc308ea4f60348a02500db8198b43cf69
+  LithoOperators: ce63ed2535e2fa279d521eb76ac3d23743a3fdc6
+  LUX: e8f5f0e3a89671b6fa7f32bbc03d07e437867fed
+  OneSignal: 6647275955d0f06d9e17c90dc93af9d85ecfd2b9
+  PlaygroundVCHelpers: c7cc8994d2851ebd1590217101b4c6888d1c9cc8
   Prelude: fe4cc0fd961d34edf48fe6b04d05c863449efb0a
-  Quick: 2623cb30d7a7f41ca62f684f679586558f483d46
-  ReactiveSwift: a2bb9ace428a109e9c0209615645d9d286c8c433
-  Result: 7645bb3f50c2ce726dd0ff2fa7b6f42bbe6c3713
   SBNag.swift: 57ae1aa7799765e2452aaa02f97ee1aca0ed396d
-  SSPullToRefresh: 3a47e116692b60e7da5a8c60418488133bcc9550
-  SwiftDate: fcdaa7ca22a903faf6d7ed231239a88d174dcae3
-  ThryvUXComponents: 8a95f74e9702a5cff0c91adccf7fc9f28834bb41
+  SDWebImage: b69257f4ab14e9b6a2ef53e910fdf914d8f757c1
+  Slippers: c4f8bf3e0ffcd2bacf7f5ccbf00bc8fa4a4b3635
+  SwiftDate: d117c3eb6beed72e47d3f4d1e3bc63fa1e66d7c3
   TwitterCore: 8cbc9ad34d91c63a0035ea05bfbfc0d7ca72a28c
-  TwitterKit: 054005edf5350aa9074af74b41456e5a61e3f322
+  TwitterKit: 5e4f41d70b9abdb41df5467f52d7aa2c0fd26ebb
 
-PODFILE CHECKSUM: 824f4261fc509a4b80dbd53d9d941ceec2a2a7c2
+PODFILE CHECKSUM: 9c2b7c47b6dccb97e211b4b6cd00201e116fccf2
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.9.0

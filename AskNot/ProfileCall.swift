@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import ThryvUXComponents
-import FunkyNetwork
+import LUX
+import FunNet
 
 class ProfileCall: THUXModelCall<UserResponse> {
     public lazy var userSignal = modelSignal.map { $0.user }.skipNil()

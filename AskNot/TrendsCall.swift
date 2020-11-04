@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import ThryvUXComponents
-import FunkyNetwork
+import LUX
+import FunNet
 
 class TrendsCall: THUXModelCall<TrendsResponse> {
     public lazy var trendsSignal = modelSignal.map { $0.trends }.skipNil()

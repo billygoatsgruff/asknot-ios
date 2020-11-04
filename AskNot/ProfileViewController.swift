@@ -51,6 +51,9 @@ class ProfileViewController: THUXRefreshableTableViewController, MFMailComposeVi
         viewModel.delegate = self
         viewModel.fetchProfile()
         
+        shareButton |> floatingButtonStyle
+        shareButton.isHidden = false
+        
         let feedback = UIBarButtonItem(image: UIImage(named: "feedback"), style: UIBarButtonItem.Style.plain, target: self, action: #selector(giveFeedback))
         navigationItem.rightBarButtonItem = feedback
     }
@@ -80,6 +83,10 @@ class ProfileViewController: THUXRefreshableTableViewController, MFMailComposeVi
     }
     
     @IBAction func sharePressed() {
+        let url = URL(string: "https://asknot.thryvinc.com/")!
+        let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        self.present(activityViewController, animated: true, completion: nil)
+        UpdateProfileCall(hasShared: true).fire()
     }
     
     @IBAction func contributeLabel() {

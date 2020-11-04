@@ -11,7 +11,7 @@ import TwitterKit
 import ThryvUXComponents
 import FunkyNetwork
 
-class LoginCall: THUXCredsLoginNetworkCall {
+enum LoginCall: THUXCredsLoginNetworkCall {
     lazy var authResponseSignal = self.dataSignal.skipNil().map(LoginCall.parse).skipNil()
     public static let ApiKeyPref = "api_key"
     

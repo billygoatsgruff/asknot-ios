@@ -9,8 +9,8 @@
 import UIKit
 import TwitterKit
 import Prelude
-import Result
 import ReactiveSwift
+import ThryvUXComponents
 
 protocol TweetsListViewModelDelegate {
     func finishedLoadingTweets(_ error: NSError?)
@@ -19,8 +19,13 @@ protocol TweetsListViewModelDelegate {
 
 open class TweetsListViewModel: NSObject, RetweetCellDelegate {
     var delegate: TweetsListViewModelDelegate?
+    var refresher: THUXRefreshableNetworkCallManager?
     var tweets: [TWTRTweet]?
     var tweetIds: [TweetId]?
+    
+    init(refresher: THUXRefreshableNetworkCallManager? = nil) {
+        self.refresher = refresher
+    }
     
     @objc open func fetchTweets() {
 //        let tweetsCall = TweetsCall()
@@ -43,7 +48,7 @@ open class TweetsListViewModel: NSObject, RetweetCellDelegate {
         if let userID = TWTRTwitter.sharedInstance().sessionStore.session()?.userID {
             let client = TWTRAPIClient(userID: userID)
             var clientError : NSError?
-            let request = client.urlRequest(withMethod: "GET", urlString: "https://api.twitter.com/1.1/statuses/lookup.json?id=\(tweetIdValues.joined(separator: ","))", parameters: nil, error: &clientError)
+            let request = client.urlRequest(withMethod: "GET", urlString: "https://api.twitter.com/1.1/statuses/lookup.json?tweet_mode=extended&id=\(tweetIdValues.joined(separator: ","))", parameters: nil, error: &clientError)
             client.sendTwitterRequest(request, completion: { (response, data, error) in
                 if let jsonData = data {
                     do {
@@ -63,7 +68,7 @@ open class TweetsListViewModel: NSObject, RetweetCellDelegate {
     }
     
     func updatedTweet(tweet: TWTRTweet, with newTweet: TWTRTweet) {
-        fetchTweets()
+        refresher?.refresh()
         delegate?.scrollToNextPage()
     }
 

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import FunkyNetwork
+import FunNet
 
 class AskNotServerConfig {
     private static let scheme = "https"

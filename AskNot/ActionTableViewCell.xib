@@ -48,6 +48,7 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="46" id="NeN-If-nLq"/>
                         </constraints>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                         <state key="normal" title="Button"/>
                     </button>
                 </subviews>

@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import ThryvUXComponents
-import FunkyNetwork
+import LUX
+import FunNet
 
 class TweetsCall: THUXModelCall<TweetIdsResponse> {
     public lazy var tweetIdsSignal = modelSignal.map { $0.tweets }.skipNil()

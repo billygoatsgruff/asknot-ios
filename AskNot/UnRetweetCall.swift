@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import ThryvUXComponents
-import FunkyNetwork
+import LUX
+import FunNet
 
 class UnRetweetCall: THUXAuthenticatedNetworkCall {
     

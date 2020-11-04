@@ -11,7 +11,7 @@ import ThryvUXComponents
 import MultiModelTableViewDataSource
 import Prelude
 
-class TweetViewController: THUXRefreshableTableViewController, TweetsListViewModelDelegate {
+class TweetViewController: THUXRefreshableTableViewController, TweetsListViewModelDelegate, UITableViewDelegate {
     @IBOutlet weak var tweetsTableView: UITableView!
     var tweetsViewModel: TweetsListViewModel!
     var dataSource = MultiModelTableViewDataSource()
@@ -24,11 +24,11 @@ class TweetViewController: THUXRefreshableTableViewController, TweetsListViewMod
         }
         refreshableModelManager = THUXRefreshableNetworkCallManager(call)
         
-        setupTableView()
+        setupTableViewDataSource()
         
         super.viewDidLoad()
         
-        tweetsViewModel = TweetsListViewModel()
+        tweetsViewModel = TweetsListViewModel(refresher: refreshableModelManager)
         tweetsViewModel.delegate = self
         
         title = "Tweets"
@@ -37,6 +37,20 @@ class TweetViewController: THUXRefreshableTableViewController, TweetsListViewMod
         
         let profile = UIBarButtonItem(image: UIImage(named: "profile"), style: UIBarButtonItem.Style.plain, target: self, action: #selector(pushProfile))
         navigationItem.rightBarButtonItem = profile
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        tweetsTableView.tableFooterView = UIView(frame: CGRect.zero)
+        var height = view.bounds.size.height
+        if #available(iOS 11, *) {
+            if let insets = navigationController?.view.safeAreaInsets {
+                height = height - insets.bottom
+            }
+        }
+        tweetsTableView.estimatedRowHeight = height
+        tweetsTableView.rowHeight = height
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -53,16 +67,13 @@ class TweetViewController: THUXRefreshableTableViewController, TweetsListViewMod
         }
     }
     
-    func setupTableView() {
+    func setupTableViewDataSource() {
         tableView = tweetsTableView
         tableView.dataSource = dataSource
+        tableView.delegate = self
         dataSource.tableView = tableView
 //        tableDataSource = TweetsTableViewDataSource()
 //        tableDataSource.retweetDelegate = self.tweetsViewModel
-        
-        tweetsTableView.tableFooterView = UIView(frame: CGRect.zero)
-        tweetsTableView.estimatedRowHeight = view.bounds.size.height - (navigationController?.navigationBar.bounds.size.height)! - 20
-        tweetsTableView.rowHeight = view.bounds.size.height - (navigationController?.navigationBar.bounds.size.height)! - 20
     }
     
     @objc func pushProfile() {
@@ -86,7 +97,7 @@ class TweetViewController: THUXRefreshableTableViewController, TweetsListViewMod
             for i in 0..<(tweetsViewModel.tweetIds?.count ?? 0) {
                 items.append(TweetItem("retweetCell", tweetsViewModel.tweetIds?[i], tweetsViewModel.tweets?[i], tweetsViewModel))
             }
-            items.append(ActionItem(identifier: "actionCell"))
+            items.append(ActionItem(identifier: "actionCell", sharePresenter: self))
             let section = MultiModelTableViewDataSourceSection()
             section.items = items
             dataSource.sections = [section]
@@ -104,6 +115,10 @@ class TweetViewController: THUXRefreshableTableViewController, TweetsListViewMod
         } else {
             self.tweetsTableView.reloadData()
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 
 }

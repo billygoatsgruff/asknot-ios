@@ -8,15 +8,19 @@
 
 import UIKit
 import TwitterKit
+import Prelude
+import FunkyNetwork
 
 protocol RetweetCellDelegate {
     func updatedTweet(tweet: TWTRTweet, with newTweet: TWTRTweet)
 }
 
 class RetweetTableViewCell: UITableViewCell {
-    @IBOutlet weak var tweetView: TWTRTweetView!
+    @IBOutlet weak var tweetViewHolder: UIView!
+    var tweetView: TWTRTweetView?
     @IBOutlet weak var retweetButton: UIButton!
     @IBOutlet weak var whyButton: UIButton!
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView?
     
     var delegate: RetweetCellDelegate?
     
@@ -25,8 +29,21 @@ class RetweetTableViewCell: UITableViewCell {
     var tweet: TWTRTweet? {
         set(newTweet) {
             privateTweet = newTweet
-            tweetView.showBorder = true
-            tweetView.configure(with: newTweet)
+            if let tweetView = tweetView {
+                tweetView.showBorder = true
+                tweetView.configure(with: newTweet)
+            } else {
+                tweetView = TWTRTweetView(tweet: newTweet, style: .regular)
+                tweetViewHolder.translatesAutoresizingMaskIntoConstraints = false
+                tweetView?.translatesAutoresizingMaskIntoConstraints = false
+                tweetViewHolder.addSubview(tweetView!)
+                tweetViewHolder.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[tweetView]-0-|", options: .init(rawValue: 0), metrics: nil, views: ["tweetView": tweetView!]))
+                tweetViewHolder.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[tweetView]-0-|", options: .init(rawValue: 0), metrics: nil, views: ["tweetView": tweetView!]))
+                contentView.setNeedsUpdateConstraints()
+                contentView.updateConstraints()
+                contentView.setNeedsLayout()
+                contentView.layoutIfNeeded()
+            }
             styleViews()
         }
         get {
@@ -39,22 +56,34 @@ class RetweetTableViewCell: UITableViewCell {
     }
     
     func styleViews() {
-        tweetView.linkTextColor = UIColor.primary()
+        tweetView?.linkTextColor = UIColor.primary()
+        tweetView?.showBorder = true
         
-        retweetButton.makeCircular().applyShadow()
         if tweet?.isRetweeted ?? false {
             retweetButton.setImage(UIImage(named: "check"), for: .normal)
-            retweetButton.backgroundColor = UIColor.primary()
+            primaryButtonStyle(retweetButton)
         }else{
             let retweetImage = UIImage(named: "retweet")?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
             retweetButton.setImage(retweetImage, for: .normal)
-            retweetButton.backgroundColor = UIColor.accent()
+            floatingButtonStyle(retweetButton)
         }
         retweetButton.contentEdgeInsets = UIEdgeInsets(top: 5,left: 5,bottom: 5,right: 5)
         
-        whyButton
-            .makeCircular()
-            .applyShadow()
+        loadingIndicator?.isHidden = true
+        
+        reversePrimaryButtonStyle(whyButton)
+    }
+    
+    func setIsLoading(isLoading: Bool) {
+        if isLoading {
+            retweetButton.isEnabled = false
+            retweetButton.setImage(nil, for: .normal)
+            loadingIndicator?.isHidden = false
+            loadingIndicator?.startAnimating()
+        } else {
+            self.retweetButton.isEnabled = true
+            self.loadingIndicator?.isHidden = true
+        }
     }
     
     @IBAction func whyPressed() {
@@ -67,6 +96,7 @@ class RetweetTableViewCell: UITableViewCell {
     
     @IBAction func retweetPressed() {
         if let displayedTweet = tweet {
+            self.setIsLoading(isLoading: true)
             if let displayedTweet = self.tweet, let objectId = self.tweetId.id {
                 if !displayedTweet.isRetweeted {
                     RetweetCall(tweetId: objectId).fire()
@@ -86,14 +116,23 @@ class RetweetTableViewCell: UITableViewCell {
                 client.sendTwitterRequest(request) { (response, data, connectionError) -> Void in
                     if connectionError != nil {
                         print("Error: \(connectionError.debugDescription)")
+                        if let error = connectionError as NSError? {
+                            DefaultNetworkErrorHandler().handleError(error)
+                        }
+                        self.setIsLoading(isLoading: false)
                     }
                     if let data = data {
                         do {
                             let json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as! [String: AnyObject]
                             let newTweet = TWTRTweet(jsonDictionary: json)
+                            self.setIsLoading(isLoading: false)
                             self.delegate?.updatedTweet(tweet: self.tweet!, with: newTweet!)
                         } catch let jsonError as NSError {
                             print("json error: \(jsonError.localizedDescription)")
+                            if let error = jsonError as NSError? {
+                                DefaultNetworkErrorHandler().handleError(error)
+                            }
+                            self.setIsLoading(isLoading: false)
                         }
                     }
                 }
@@ -102,16 +141,46 @@ class RetweetTableViewCell: UITableViewCell {
     }
 }
 
-extension UIView {
-    func applyShadow() -> UIView {
-        self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOpacity = 0.2
-        self.layer.shadowOffset = CGSize(width: 1, height: 1)
-        return self
+precedencegroup SingleTypeComposition {
+    associativity: right
+    higherThan: ForwardApplication
+}
+infix operator <>: SingleTypeComposition
+func <> <A: AnyObject>(f: @escaping (A) -> Void, g: @escaping (A) -> Void) -> (A) -> Void {
+    return { a in
+        f(a)
+        g(a)
     }
-    
-    func makeCircular() -> UIView {
-        self.layer.cornerRadius = self.bounds.size.height / 2
-        return self
-    }
+}
+
+func applyShadow(_ view: UIView) {
+    view.layer.shadowColor = UIColor.black.cgColor
+    view.layer.shadowOpacity = 0.2
+    view.layer.shadowOffset = CGSize(width: 1, height: 1)
+}
+
+func makeCircular(_ view: UIView) {
+    view.layer.cornerRadius = view.bounds.size.height / 2
+}
+
+let floatingStyle = makeCircular <> applyShadow
+
+let floatingButtonStyle = makeCircular <> applyShadow <> { (button: UIButton) in
+    button.setTitleColor(UIColor.white, for: .normal)
+    button.backgroundColor = UIColor.accent()
+}
+
+let primaryButtonStyle = makeCircular <> applyShadow <> { (button: UIButton) in
+    button.setTitleColor(UIColor.reverse(), for: .normal)
+    button.backgroundColor = UIColor.primary()
+}
+
+let reversePrimaryButtonStyle = makeCircular <> applyShadow <> { (button: UIButton) in
+    button.setTitleColor(UIColor.primary(), for: .normal)
+    button.backgroundColor = UIColor.reverse()
+}
+
+let reverseButtonStyle = makeCircular <> applyShadow <> { (button: UIButton) in
+    button.setTitleColor(UIColor.accent(), for: .normal)
+    button.backgroundColor = UIColor.reverse()
 }

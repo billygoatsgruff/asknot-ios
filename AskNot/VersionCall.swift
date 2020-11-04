@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import FunkyNetwork
+import FunNet
 
 class VersionCall: JsonNetworkCall {
     public lazy var versionSignal = jsonSignal.map(VersionCall.parse)
