@@ -1,7 +1,4 @@
 PODS:
-  - Crashlytics (3.14.0):
-    - Fabric (~> 1.10.2)
-  - Fabric (1.10.2)
   - FlexDataSource (0.1.6):
     - fuikit
   - fuikit (0.0.7)
@@ -66,42 +63,34 @@ PODS:
   - OneSignal (2.15.4)
   - PlaygroundVCHelpers (0.0.2)
   - Prelude (3.0.0)
-  - SBNag.swift (0.0.2):
-    - SwiftDate
   - SDWebImage (5.9.4):
     - SDWebImage/Core (= 5.9.4)
   - SDWebImage/Core (5.9.4)
   - Slippers (0.0.2)
-  - SwiftDate (6.2.0)
   - TwitterCore (3.2.0)
   - TwitterKit (3.4.2):
     - TwitterCore (>= 3.2.0)
 
 DEPENDENCIES:
-  - Crashlytics
-  - Fabric
   - FlexDataSource (from `https://github.com/ThryvInc/flex-data-source`)
+  - fuikit
   - FunNet/Combine (from `https://github.com/schrockblock/funnet`)
   - GPUImage
   - LithoOperators (from `https://github.com/ThryvInc/LithoOperators`)
   - LUX (from `https://github.com/ThryvInc/LUX`)
   - OneSignal
   - PlaygroundVCHelpers (from `https://github.com/ThryvInc/playground-vc-helpers`)
-  - SBNag.swift
+  - Slippers
   - TwitterKit
 
 SPEC REPOS:
   trunk:
-    - Crashlytics
-    - Fabric
     - fuikit
     - GPUImage
     - OneSignal
     - Prelude
-    - SBNag.swift
     - SDWebImage
     - Slippers
-    - SwiftDate
     - TwitterCore
     - TwitterKit
 
@@ -122,7 +111,7 @@ CHECKOUT OPTIONS:
     :commit: ff640567fcbcf7f2db09b5264614dc4bc5811a5f
     :git: https://github.com/ThryvInc/flex-data-source
   FunNet:
-    :commit: e56bc9bdb94db1df53f6a84c4041b2dc72bbd6cb
+    :commit: 2bbe2907039501ab2fa1ab0c6f2ee31045a8fb01
     :git: https://github.com/schrockblock/funnet
   LithoOperators:
     :commit: b2ad9e7bf37efebe935c661f6dbb7c1b0a16acd6
@@ -135,24 +124,20 @@ CHECKOUT OPTIONS:
     :git: https://github.com/ThryvInc/playground-vc-helpers
 
 SPEC CHECKSUMS:
-  Crashlytics: 9220f5bc89e7a618df411b4f639389dbfb0e03d2
-  Fabric: ea977e3cd9c20425516d3dafd3bf8c941c51223f
   FlexDataSource: 411e77d3a933d71ae3094e3d4d6ccedd3419f29e
   fuikit: 9e4c918280be6b292e4564564dd11495e5f91861
-  FunNet: d3a58cf3092d9ec4c9ca9338c4f20fcc7e0eebad
+  FunNet: c7da8924cc8ec1f4b7126b2ad1f8c3f35b8a9e7a
   GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
   LithoOperators: ce63ed2535e2fa279d521eb76ac3d23743a3fdc6
   LUX: e8f5f0e3a89671b6fa7f32bbc03d07e437867fed
   OneSignal: 6647275955d0f06d9e17c90dc93af9d85ecfd2b9
   PlaygroundVCHelpers: c7cc8994d2851ebd1590217101b4c6888d1c9cc8
   Prelude: fe4cc0fd961d34edf48fe6b04d05c863449efb0a
-  SBNag.swift: 57ae1aa7799765e2452aaa02f97ee1aca0ed396d
   SDWebImage: b69257f4ab14e9b6a2ef53e910fdf914d8f757c1
   Slippers: c4f8bf3e0ffcd2bacf7f5ccbf00bc8fa4a4b3635
-  SwiftDate: d117c3eb6beed72e47d3f4d1e3bc63fa1e66d7c3
   TwitterCore: 8cbc9ad34d91c63a0035ea05bfbfc0d7ca72a28c
   TwitterKit: 5e4f41d70b9abdb41df5467f52d7aa2c0fd26ebb
 
-PODFILE CHECKSUM: 9c2b7c47b6dccb97e211b4b6cd00201e116fccf2
+PODFILE CHECKSUM: 856b3906f2d005bed56333e50129aad2b6138d68
 
 COCOAPODS: 1.9.0

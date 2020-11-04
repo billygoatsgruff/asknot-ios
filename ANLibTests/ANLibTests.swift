@@ -1,14 +1,14 @@
 //
-//  AskNotTests.swift
-//  AskNotTests
+//  ANLibTests.swift
+//  ANLibTests
 //
 //  Created by Elliot Schrock on 10/30/20.
 //
 
 import XCTest
-@testable import AskNot
+@testable import ANLib
 
-class AskNotTests: XCTestCase {
+class ANLibTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
