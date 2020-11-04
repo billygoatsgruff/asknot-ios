@@ -1,25 +1,33 @@
-# Uncomment the next line to define a global platform for your project
 platform :ios, '13.0'
 
-target 'AskNot' do
-  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
-  use_frameworks!
-  pod 'Fabric'
-  pod 'Crashlytics'
+def import_all
   pod 'TwitterKit'
   pod 'OneSignal'
   pod 'GPUImage'
-  pod 'SBNag.swift'
+  pod 'LUX', git: 'https://github.com/ThryvInc/LUX'
   pod 'LithoOperators', git: 'https://github.com/ThryvInc/LithoOperators'
   pod 'FunNet/Combine', git: 'https://github.com/schrockblock/funnet'
   pod 'PlaygroundVCHelpers', git: 'https://github.com/ThryvInc/playground-vc-helpers'
   pod 'FlexDataSource', git: 'https://github.com/ThryvInc/flex-data-source'
-  pod 'LUX', git: 'https://github.com/ThryvInc/LUX'
+  pod 'Slippers'
+  pod 'fuikit'
+end
 
-  # Pods for AskNot
+target 'ANLib' do
+  use_frameworks!
+  import_all
 
-  target 'AskNotTests' do
+  target 'ANLibTests' do
     inherit! :search_paths
   end
 
+  target 'AskNot' do
+    inherit! :search_paths
+    import_all
+
+    target 'AskNotTests' do
+      inherit! :search_paths
+      # Pods for testing
+    end
+  end
 end

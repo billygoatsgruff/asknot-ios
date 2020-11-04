@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UserProfileViewController" customModule="ANLib" customModuleProvider="target">
+            <connections>
+                <outlet property="retweetCount" destination="0iF-HP-8oN" id="7ED-Oa-Cxk"/>
+                <outlet property="shareButton" destination="66c-hw-gP3" id="6xD-dQ-f1y"/>
+                <outlet property="sharedLabel" destination="11s-jl-H62" id="A3J-gr-dmB"/>
+                <outlet property="supportButton" destination="EjG-1r-tmT" id="6J9-aY-9lE"/>
+                <outlet property="supporterLabel" destination="clh-fE-4Us" id="vxt-vO-mSi"/>
+                <outlet property="tableView" destination="gx0-r0-5Fc" id="XO4-lI-2v4"/>
+                <outlet property="trendLabel" destination="MNj-FV-Nat" id="Ck9-00-mYK"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gx0-r0-5Fc">
+                    <rect key="frame" x="0.0" y="178" width="414" height="684"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You've helped make these things trend:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MNj-FV-Nat">
+                    <rect key="frame" x="16" y="152" width="282" height="18"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number of retweets:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h9s-JE-E3a">
+                    <rect key="frame" x="16" y="44" width="188" height="24"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Has shared app:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qNr-gy-gBM">
+                    <rect key="frame" x="16" y="82" width="130" height="21"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Supporter:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9ky-2O-LQs">
+                    <rect key="frame" x="16" y="117" width="86" height="21"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0iF-HP-8oN">
+                    <rect key="frame" x="212" y="46.5" width="11" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Maybe later" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="11s-jl-H62">
+                    <rect key="frame" x="166.5" y="83.5" width="80.5" height="18"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not yet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="clh-fE-4Us">
+                    <rect key="frame" x="166.5" y="118.5" width="50" height="18"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="66c-hw-gP3">
+                    <rect key="frame" x="291" y="77.5" width="107" height="30"/>
+                    <color key="backgroundColor" red="0.99215686270000003" green="0.7725490196" blue="0.098039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="107" id="Fib-ed-cuq"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                    <state key="normal" title="SHARE NOW">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="sharePressed" destination="-1" eventType="touchUpInside" id="KRs-Mf-MKL"/>
+                    </connections>
+                </button>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EjG-1r-tmT">
+                    <rect key="frame" x="291" y="112.5" width="107" height="30"/>
+                    <color key="backgroundColor" red="0.99215686270000003" green="0.7725490196" blue="0.098039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="107" id="kuS-QS-f3f"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                    <state key="normal" title="CONTRIBUTE">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="h9s-JE-E3a" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="6Hh-tx-czT"/>
+                <constraint firstItem="11s-jl-H62" firstAttribute="centerY" secondItem="qNr-gy-gBM" secondAttribute="centerY" id="7g5-ae-MhW"/>
+                <constraint firstItem="clh-fE-4Us" firstAttribute="leading" secondItem="11s-jl-H62" secondAttribute="leading" id="8pR-Rv-EB3"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="gx0-r0-5Fc" secondAttribute="trailing" id="A12-Wn-HDx"/>
+                <constraint firstItem="h9s-JE-E3a" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="EE3-yv-bYS"/>
+                <constraint firstItem="MNj-FV-Nat" firstAttribute="leading" secondItem="9ky-2O-LQs" secondAttribute="leading" id="HhJ-Ir-AjQ"/>
+                <constraint firstItem="9ky-2O-LQs" firstAttribute="top" secondItem="qNr-gy-gBM" secondAttribute="bottom" constant="14" id="MGd-gF-Hx1"/>
+                <constraint firstItem="qNr-gy-gBM" firstAttribute="leading" secondItem="h9s-JE-E3a" secondAttribute="leading" id="OOh-an-YDX"/>
+                <constraint firstItem="gx0-r0-5Fc" firstAttribute="top" secondItem="MNj-FV-Nat" secondAttribute="bottom" constant="8" id="QNd-Q4-ACz"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="EjG-1r-tmT" secondAttribute="trailing" constant="16" id="Tal-3W-b8e"/>
+                <constraint firstItem="EjG-1r-tmT" firstAttribute="baseline" secondItem="clh-fE-4Us" secondAttribute="baseline" id="Tbe-5q-WU6"/>
+                <constraint firstItem="66c-hw-gP3" firstAttribute="baseline" secondItem="11s-jl-H62" secondAttribute="baseline" id="VEY-18-TGt"/>
+                <constraint firstItem="0iF-HP-8oN" firstAttribute="baseline" secondItem="h9s-JE-E3a" secondAttribute="baseline" id="Wai-dB-ib6"/>
+                <constraint firstItem="MNj-FV-Nat" firstAttribute="top" secondItem="9ky-2O-LQs" secondAttribute="bottom" constant="14" id="XNh-DB-Ieo"/>
+                <constraint firstItem="clh-fE-4Us" firstAttribute="centerY" secondItem="9ky-2O-LQs" secondAttribute="centerY" id="aAZ-Ir-g8g"/>
+                <constraint firstItem="0iF-HP-8oN" firstAttribute="leading" secondItem="h9s-JE-E3a" secondAttribute="trailing" constant="8" id="eMZ-G0-vc0"/>
+                <constraint firstItem="qNr-gy-gBM" firstAttribute="top" secondItem="h9s-JE-E3a" secondAttribute="bottom" constant="14" id="oia-Zj-2yZ"/>
+                <constraint firstItem="gx0-r0-5Fc" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="rvB-0M-7r5"/>
+                <constraint firstItem="11s-jl-H62" firstAttribute="leading" secondItem="qNr-gy-gBM" secondAttribute="trailing" constant="20.5" id="v7x-PJ-6Og"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="66c-hw-gP3" secondAttribute="trailing" constant="16" id="x6f-lC-YfE"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="gx0-r0-5Fc" secondAttribute="bottom" id="xzb-pu-DOR"/>
+                <constraint firstItem="9ky-2O-LQs" firstAttribute="leading" secondItem="qNr-gy-gBM" secondAttribute="leading" id="yVB-cG-Hyo"/>
+            </constraints>
+            <point key="canvasLocation" x="140.57971014492756" y="148.66071428571428"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
